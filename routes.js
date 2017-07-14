@@ -15,12 +15,10 @@ function feed(req, res) {
   for (source in sources.sources) {
     if (source === url) {
       res.statusCode = 200
-      var test = data.getData(url, req, res)
-      res.end('Check ' + url + ' now')
+      data.getData(url, req, res)
       }
     }
-  res.end('Nothing here')
-}
+  }
 
 module.exports.home = home
 module.exports.feed = feed
