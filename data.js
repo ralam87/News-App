@@ -8,6 +8,17 @@ function getData(url, req, res) {
   let body = ''
   let articles = []
 
+  const print = () => {
+    articles.toString()
+    articles.forEach((article)=>{
+      res.write('\n' + article.title)
+      res.write('\n' + article.description)
+      res.write('\n' + article.url)
+      res.write('\n')
+    })
+    res.end('\ncheck ' + url + ' now')
+  }
+
   https.get(fullReqAdd,(response) => {
 
     response.on('data', (data)=>{
@@ -15,7 +26,6 @@ function getData(url, req, res) {
     })
 
     response.on('end', ()=> {
-
       body = JSON.parse(body)
       body.articles.forEach((article)=>{
 
@@ -27,19 +37,9 @@ function getData(url, req, res) {
         }
         articles.push(fullArticle)
       })
+      print()
     })
   })
-
-  setTimeout(()=>{
-    articles.toString()
-    articles.forEach((article)=>{
-      res.write('\n' + article.title)
-      res.write('\n' + article.description)
-      res.write('\n' + article.url)
-      res.write('\n')
-    })
-    res.end('\ncheck ' + url + ' now')
-  }, 5000)
 }
 
 module.exports.getData = getData
